@@ -11,7 +11,9 @@ JavaScript 커스터마이징으로 막은 기록이다.
 | 문제 | 모든 승인이 끝난 뒤에도 **기안자가 금액과 내용을 고칠 수 있었다** — 내부통제 결함 |
 | 한 일 | 역할(기안자·현재 결재자·제3자)과 상태(완료 계열)로 판정해 **버튼·편집 화면·저장 세 지점을 모두 차단**. 필드는 기본 잠금, 현재 결재자만 해제 |
 | 결과 | URL 직접 진입·API 저장까지 막는 편집 잠금. 나중에 추가되는 필드도 기본으로 잠긴다 |
-| 기술 | JavaScript · Kintone JS API (`app.record.*` 이벤트) |
+| 열람 권한 | 다른 사람 기안이 다 보이던 문제를 **결재선 매트릭스(기안자 × 금액)를 기안자별 조건부 레코드 권한으로 옮겨** 해결. JS로는 서버 열람 권한을 못 막는다는 판단에서 출발 |
+| 확장 | 승인자 필드 구조가 다른 여러 결재 앱에 쓰도록 `CONFIG`화, Excel 첨부 값이 저장 후 사라지던 원인(검색 플러그인) 추적·우회 |
+| 기술 | JavaScript · Kintone JS API (`app.record.*` 이벤트) · REST API · 앱·레코드 권한 |
 
 ---
 
@@ -39,6 +41,8 @@ app.record.edit.submit   → 저장을 거부한다            (저장되지 못
 |---|---|
 | [`src/requester-cannot-edit.js`](src/requester-cannot-edit.js) | 구현 239줄 |
 | [`docs/01-edit-lock.md`](docs/01-edit-lock.md) | 판정 기준, 구현에서 신경 쓴 것, 플랫폼 제약 |
+| [`docs/02-record-permissions.md`](docs/02-record-permissions.md) | 열람 범위 요구, 플랫폼 권한 동작, 검토한 방법과 기안자별 조건부 세트 |
+| [`docs/03-multi-app-and-import.md`](docs/03-multi-app-and-import.md) | 여러 앱용 `CONFIG`화, Excel 가져오기 값 유실 추적 |
 
 ---
 
